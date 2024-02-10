@@ -99,7 +99,7 @@
                     <p th:text="${availableProduct.description}"></p>
                 </div>
                 <div class="price-text">
-                    <th:block th:if="${availableProduct.specialOffers.size() > 0}">
+                    <th:block th:if="${specialOfferService.isAnyOfferValid(availableProduct.getSpecialOffers()) == true}">
                                     <span class="card-text">
                                         <span th:text="${#numbers.formatDecimal(specialOfferService.calculateFinalPrice(availableProduct), 1, 'COMMA', 2, 'POINT')}"></span>PLN
                                     </span>
@@ -108,7 +108,7 @@
                                     </span>
                     </th:block>
 
-                    <th:block th:unless="${availableProduct.specialOffers.size() > 0}">
+                    <th:block th:unless="${specialOfferService.isAnyOfferValid(availableProduct.getSpecialOffers()) == true}">
                         <p class="card-text">
                             <span th:text="${#numbers.formatDecimal(availableProduct.product.price, 1, 'COMMA', 2, 'POINT')}"></span>PLN
                         </p>
@@ -145,7 +145,7 @@
                     Kod produktu <span th:text="${availableProduct.product.code}"  style="float: right;"></span>
                 </div>
 
-                <th:block th:if="${availableProduct.specialOffers.size() > 0}">
+                <th:block th:if="${specialOfferService.isAnyOfferValid(availableProduct.getSpecialOffers()) == true}">
                     <div class="offer-container" th:each="offer : ${availableProduct.specialOffers}">
                         <div th:if="${specialOfferService.isOfferValid(offer)}" class="alert alert-info" role="alert" style="align-items: stretch;">
                             <span th:text="'Oferta ' + '\'' +${offer.info} + '\' obowiązuje od ' + ${#temporals.format(offer.startDate, 'dd.MM.yyyy')} + ' do ' + ${#temporals.format(offer.endDate, 'dd.MM.yyyy')}"></span>

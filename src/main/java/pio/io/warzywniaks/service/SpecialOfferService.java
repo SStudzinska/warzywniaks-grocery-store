@@ -1,5 +1,6 @@
 package pio.io.warzywniaks.service;
 
+import groovyjarjarpicocli.CommandLine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pio.io.warzywniaks.model.entity.AvailableProduct;
@@ -10,6 +11,7 @@ import pio.io.warzywniaks.model.repository.SpecialOfferRepository;
 import java.math.BigDecimal;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -53,6 +55,15 @@ public class SpecialOfferService {
     public boolean isOfferValid(SpecialOffer specialOffer) {
         LocalDate currentDate = LocalDate.now();
         return !currentDate.isBefore(specialOffer.getStartDate()) && !currentDate.isAfter(specialOffer.getEndDate());
+    }
+
+    public boolean isAnyOfferValid(ArrayList<SpecialOffer> specialOffers){
+        for (SpecialOffer specialOffer : specialOffers){
+            if (isOfferValid(specialOffer)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public BigDecimal calculateTotalPriceInCart(List<ProductInCart> products){

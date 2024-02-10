@@ -110,7 +110,7 @@
                                 <span th:text="${category.getName()}"></span>
                             </label>
                         </div>
-                        <button type="submit">Filtruj</button>
+                        <button type="submit" class="btn btn-primary">Filtruj</button>
                     </form>
                 </div>
             </div>
@@ -137,7 +137,7 @@
                                 </a>
 
                                 <!-- Display pricing information -->
-                                <th:block th:if="${availableProduct.specialOffers.size() > 0}">
+                                <th:block th:if="${specialOfferService.isAnyOfferValid(availableProduct.getSpecialOffers()) == true}">
                                     <span class="card-text">
                                         <span th:text="${#numbers.formatDecimal(specialOfferService.calculateFinalPrice(availableProduct), 1, 'COMMA', 2, 'POINT')}"></span>PLN
                                     </span>
@@ -146,7 +146,7 @@
                                     </span>
                                 </th:block>
 
-                                <th:block th:unless="${availableProduct.specialOffers.size() > 0}">
+                                <th:block th:unless="${specialOfferService.isAnyOfferValid(availableProduct.getSpecialOffers()) == true}">
                                     <p class="card-text">
                                         <span th:text="${#numbers.formatDecimal(availableProduct.product.price, 1, 'COMMA', 2, 'POINT')}"></span>PLN
                                     </p>
